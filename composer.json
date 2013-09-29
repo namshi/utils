@@ -1,0 +1,23 @@
+{
+    "name": "namshi/utils",
+    "description": "Utilities we had to develop at Namshi",
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "odino",
+            "email": "alessandro.nadalin@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Namshi\\Utils":  "src/",
+            "Namshi\\Utils\\Test":  "tests/"
+        }
+    },
+    "require": {
+
+    }
+}
