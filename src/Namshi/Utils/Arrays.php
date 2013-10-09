@@ -27,10 +27,13 @@ class Arrays
                         $diff[$key] = $subDiff;
                     }
                 } elseif ($master[$key] != $slave[$key]) {
-                    $diff[$key] = $value;
+                    $diff[$key] = array(
+                        $master[$key],
+                        $slave[$key],
+                    );
                 }
             } else {
-                $diff[$key] = $value;
+                $diff[$key] = array($value, null);
             }
         }
 
