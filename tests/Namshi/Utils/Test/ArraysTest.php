@@ -7,6 +7,34 @@ use Namshi\Utils\Arrays;
 
 class ArraysTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testOrderingAnEmptyArray()
+    {
+        $this->assertEquals(array(
+            'a' => null,
+            'b' => null,
+        ), Arrays::sort(array(), array('a', 'b')));
+    }
+
+    public function testOrderingASimpleArray()
+    {
+        $this->assertEquals(array(
+            'a' => 2,
+            'b' => 0,
+        ), Arrays::sort(array('b' => 0, 'a' => 2), array('a', 'b')));
+    }
+
+    public function testOrderingAnArrayWithExceedingValues()
+    {
+        $this->assertEquals(array(
+            'a' => 2,
+            'b' => 0,
+            'c' => 'hello',
+        ), Arrays::sort(array('c' => 'hello', 'b' => 0, 'a' => 2), array('a', 'b')));
+    }
+
     public function testComparingTwoFlatArrays()
     {
         $this->assertCount(0, Arrays::compare(array(1,2,3), array(1,2,3)));
