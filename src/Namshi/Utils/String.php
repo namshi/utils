@@ -3,9 +3,9 @@
 namespace Namshi\Utils;
 
 /**
- * Class Strings give you some utilities to work with strings.
+ * Class String give you some utilities to work with string.
  */
-class Strings
+class String
 {
     /**
      * Removes double slashes present in the url
