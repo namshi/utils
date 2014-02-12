@@ -9,31 +9,43 @@ class Arrays
 {
     /**
      * Compares the $master array with the $slave, returning the difference between them.
+     * $excludeKeys is an array that can contains keys that will be not used during the comparison.
+     * If $fullArrayOutput is true, the output will contain not just the keys that differs but also
+     * the whole array those keys belong to.
      *
      * @param array $master
      * @param array $slave
+     * @param array $excludeKeys
      * @return array
      */
-    public static function compare(array $master, array $slave)
+    public static function compare(array $master, array $slave, $excludeKeys = array(), $fullArrayOutput = false)
     {
         $diff = array();
 
         foreach ($master as $key => $value) {
-            if (isset($slave[$key])) {
-                if (is_array($value) ) {
-                    $subDiff = static::compare($value, $slave[$key]);
 
-                    if (count($subDiff)) {
-                        $diff[$key] = $subDiff;
+            if(!in_array($key, $excludeKeys, true)){
+                if (isset($slave[$key])) {
+                    if (is_array($value) ) {
+                        $subDiff = static::compare($value, $slave[$key], $excludeKeys, $fullArrayOutput);
+
+                        if (count($subDiff)) {
+                            $diff[$key] = $subDiff;
+                        }
+                    } elseif ($master[$key] != $slave[$key]) {
+                        $masterOutput = $fullArrayOutput ? $master : $master[$key];
+                        $slaveOutput  = $fullArrayOutput ? $slave  : $slave[$key];
+
+                        $diff[$key] = array(
+                            $masterOutput,
+                            $slaveOutput,
+                        );
                     }
-                } elseif ($master[$key] != $slave[$key]) {
-                    $diff[$key] = array(
-                        $master[$key],
-                        $slave[$key],
-                    );
+                } else {
+                    if(isset($master[$key])) {
+                        $diff[$key] = array($value, null);
+                    }
                 }
-            } else {
-                $diff[$key] = array($value, null);
             }
         }
 
