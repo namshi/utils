@@ -72,6 +72,18 @@ class ArraysTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(
             'key' => array('val1', 'val2')
         ), Arrays::compare($master, $slave));
+
+        $master = array(
+            'key' => array(1)
+        );
+
+        $slave = array(
+            'key' => 'val2'
+        );
+
+        $this->assertEquals(array(
+            'key' => array(array(1), 'val2')
+        ), Arrays::compare($master, $slave));
     }
 
     public function testComparingTwoMultiDimensionalArrays()
