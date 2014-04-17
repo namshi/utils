@@ -26,7 +26,7 @@ class Arrays
 
             if(!in_array($key, $excludeKeys, true)){
                 if (isset($slave[$key])) {
-                    if (is_array($value) ) {
+                    if (is_array($value) && is_array($slave[$key])) {
                         $subDiff = static::compare($value, $slave[$key], $excludeKeys, $fullArrayOutput);
 
                         if (count($subDiff)) {
