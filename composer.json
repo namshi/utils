@@ -15,9 +15,12 @@
         "psr-0": {
             "Namshi\\Utils":  "src/",
             "Namshi\\Utils\\Test":  "tests/"
-        }
+        },
+        "files": [
+            "src/Namshi/Utils/Functions.php"
+        ]
     },
     "require": {
-
+        "symfony/property-access": "~2.2"
     }
 }
