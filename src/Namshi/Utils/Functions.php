@@ -64,3 +64,41 @@ function arabic_numbers_to_english($string)
 
     return str_replace($arabicNumbers, $englishNumbers, $string);
 }
+
+/**
+ * Returns if the $ip is in the valid ips or subnet masks $validIps, examples:
+ * '192.168.100.110, 192.168.100.64/26'                          -> true
+ * '192.168.100.110, array(192.168.100.110, 192.168.100.115/26)' -> true
+ * '192.168.100.15, 192.168.100.14'                              -> false
+ * '55.192.168.100, 192.168.100.64/26'                           -> false
+ *
+ * @param string $ip
+ * @param string|array $validIps
+ *
+ * @return bool
+ */
+function validate_ip($ip, $validIps)
+{
+    if (filter_var($ip, FILTER_VALIDATE_IP)) {
+        if (!is_array($validIps)) {
+            $validIps = [$validIps];
+        }
+
+        foreach ($validIps as $validIp) {
+            if (is_scalar($validIp)) {
+                $validIpParts = explode('/', $validIp);
+                $subnet         = array_get($validIpParts, '[0]');
+                $bits           = array_get($validIpParts, '[1]', '32');
+                $ip             = ip2long($ip);
+                $subnet         = ip2long($subnet);
+                $mask           = -1 << (32 - $bits);
+
+                if (($ip & $mask) === $subnet) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
