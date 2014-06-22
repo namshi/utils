@@ -14,6 +14,10 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 function array_get(array $array, $key, $default = null)
 {
+    if ($key === '[]') {
+        return $default;
+    }
+
     $accessor = PropertyAccess::createPropertyAccessor();
     $value    = $accessor->getValue($array, $key);
 
