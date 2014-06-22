@@ -45,6 +45,8 @@ class FunctionsTest extends PHPUnit_Framework_TestCase
 
         array_set($array, 'key', 5);
         $this->assertEquals(array_get($array, '[key]'), 5);
+        $this->assertNull(array_get($array, '[]'));
+        $this->assertEquals('default', array_get($array, '[]', 'default'));
 
         array_set($array, 'keys', array('key1', 'key2', 'key3'));
         $this->assertCount(3, array_get($array, '[keys]'));
