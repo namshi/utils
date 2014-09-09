@@ -175,4 +175,19 @@ class FunctionsTest extends PHPUnit_Framework_TestCase
 
         $this->assertFalse($valid);
     }
+
+    public function testBoolifyFunction()
+    {
+        $this->assertEquals(true, boolify('true'));
+        $this->assertEquals(true, boolify(1));
+        $this->assertEquals(true, boolify(true));
+
+        $this->assertEquals(false, boolify('false'));
+        $this->assertEquals(false, boolify(0));
+        $this->assertEquals(false, boolify(false));
+
+        $this->assertEquals(null, boolify('string'));
+        $this->assertEquals(null, boolify(array()));
+        $this->assertEquals(null, boolify(new \stdClass()));
+    }
 }

@@ -106,3 +106,26 @@ function validate_ip($ip, $validIps)
 
     return false;
 }
+
+/**
+ * Manipulates $value, which is expected to be a boolean string/integer/true/false and returns
+ * the boolean representation of it.
+ *
+ * If $value does not evaluate to boolean true nor boolean false it returns null
+ *
+ * @param string|bool|null $value
+ *
+ * @return bool|null
+ */
+function boolify($value)
+{
+    if ($value === 'true' || $value === 1 || $value === true) {
+        return true;
+    }
+
+    if ($value === 'false' || $value === 0 || $value === false) {
+        return false;
+    }
+
+    return null;
+}
