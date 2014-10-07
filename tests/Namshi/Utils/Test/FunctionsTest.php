@@ -63,8 +63,8 @@ class FunctionsTest extends PHPUnit_Framework_TestCase
     public function testValidateIpWithValidIpAndArrayOfRanges()
     {
         $valid = validate_ip('192.168.100.110', array(
-            '192.168.100.64/26',
             '10.168.100.64/26',
+            '192.168.100.64/26',
             '15.168.100.64/26'
         ));
 

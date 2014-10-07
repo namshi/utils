@@ -14,6 +14,8 @@ class CodeGenerator
      */
     public static $max_code_length = 5;
 
+    protected static $dictionary = 'qwertyuiopasdfghjklzxcvbnm1234567890';
+
     /**
      * Generate random code
      *
@@ -25,10 +27,17 @@ class CodeGenerator
      */
     public static function generateRandomCode($length = null)
     {
-        if (empty ($length) || $length < 0 || !is_numeric($length)) {
+        $length = min((int)$length, 40);
+
+        if ($length <= 0) {
             $length = self::$max_code_length;
         }
 
-        return substr(sha1(microtime()), 1, $length);
+        for ($code = '', $maxOffset = strlen(self::$dictionary) - 1; $length--;) {
+            $code .= self::$dictionary[mt_rand(0, $maxOffset)];
+        }
+
+        return $code;
     }
+
 }

@@ -83,21 +83,19 @@ function arabic_numbers_to_english($string)
  */
 function validate_ip($ip, $validIps)
 {
+    $validIps = (array)$validIps;
+
     if (filter_var($ip, FILTER_VALIDATE_IP)) {
-        if (!is_array($validIps)) {
-            $validIps = [$validIps];
-        }
+        $ip = ip2long($ip);
 
         foreach ($validIps as $validIp) {
             if (is_scalar($validIp)) {
-                $validIpParts = explode('/', $validIp);
-                $subnet         = array_get($validIpParts, '[0]');
-                $bits           = array_get($validIpParts, '[1]', '32');
-                $ip             = ip2long($ip);
-                $subnet         = ip2long($subnet);
-                $mask           = -1 << (32 - $bits);
+                $ipParts = explode('/', $validIp);
+                $subnet  = ip2long($ipParts[0]);
+                $size    = min(isset($ipParts[1]) ? (int)$ipParts[1] : 32, 32);
+                $mask    = (pow(2, $size) - 1) << (32 - $size);
 
-                if (($ip & $mask) === $subnet) {
+                if (($ip & $mask) === ($subnet & $mask)) {
                     return true;
                 }
             }
