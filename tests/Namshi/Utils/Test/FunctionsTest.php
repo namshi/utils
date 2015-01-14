@@ -31,6 +31,14 @@ class FunctionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('', $englishNumbers);
     }
 
+    public function testArrayGetMultidimensionalArray()
+    {
+        $array = ['foo' => ['bar' => 300]];
+
+        $this->assertEquals(300, array_get($array, '[foo][bar]'));
+        $this->assertEquals(null, array_get($array, '[foo][bar][foo]'));
+    }
+
     public function testArrayGetAndSetValues()
     {
         $array = array(
