@@ -14,12 +14,13 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 function array_get(array $array, $key, $default = null)
 {
-    if ($key === '[]') {
+    $accessor = PropertyAccess::createPropertyAccessor();
+
+    if ($key === '[]' || ! $accessor->isReadable($array, $key)) {
         return $default;
     }
 
-    $accessor = PropertyAccess::createPropertyAccessor();
-    $value    = $accessor->getValue($array, $key);
+    $value = $accessor->getValue($array, $key);
 
     if (empty($value) && !isset($default)) {
         switch (gettype($value)) {

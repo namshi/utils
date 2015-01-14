@@ -21,6 +21,6 @@
         ]
     },
     "require": {
-        "symfony/property-access": "~2.2"
+        "symfony/property-access": "2.5.6"
     }
 }
